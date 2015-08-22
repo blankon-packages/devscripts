@@ -1,0 +1,216 @@
+Source: devscripts
+Section: devel
+Priority: optional
+Maintainer: Devscripts Devel Team <devscripts-devel@lists.alioth.debian.org>
+Uploaders: James McCoy <jamessan@debian.org>,
+           Martin Zobel-Helas <zobel@debian.org>,
+           Patrick Schoenfeld <schoenfeld@debian.org>,
+           Ryan Niebur <ryanryan52@gmail.com>,
+           Benjamin Drung <bdrung@debian.org>
+Standards-Version: 3.9.6
+Build-Depends: bash-completion,
+               debhelper (>= 9),
+               docbook-xsl,
+               dpkg-dev (>= 1.17.0),
+               file,
+               libdistro-info-perl,
+               libfile-desktopentry-perl,
+               libtimedate-perl,
+               liburi-perl,
+               libwww-perl,
+               lsb-release,
+               perl,
+               pkg-config,
+               po4a (>= 0.40),
+               pylint,
+               python3-all,
+               python3-debian (>= 0.1.15),
+               python3-magic,
+               python3-setuptools,
+               shunit2 (>= 2.1.6),
+               unzip,
+               wdiff,
+               xsltproc,
+               xz-utils,
+               zip
+XS-Testsuite: autopkgtest
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/devscripts.git
+Vcs-Git: git://anonscm.debian.org/collab-maint/devscripts.git
+
+Package: devscripts
+Architecture: any
+Multi-Arch: foreign
+Depends: dpkg-dev (>= 1.17.0),
+         ${misc:Depends},
+         ${perl:Depends},
+         ${python3:Depends},
+         ${shlibs:Depends}
+Recommends: at,
+            dctrl-tools,
+            dput | dupload,
+            fakeroot,
+            file,
+            gnupg,
+            libdistro-info-perl,
+            libencode-locale-perl,
+            libjson-perl,
+            liburi-perl,
+            libwww-perl,
+            lintian,
+            man-db,
+            patch,
+            patchutils,
+            python3-debian (>= 0.1.15),
+            python3-magic,
+            sensible-utils,
+            strace,
+            unzip,
+            wdiff,
+            wget | curl,
+            xz-utils,
+            ${vendor:Recommends}
+Suggests: bsd-mailx | mailx,
+          build-essential,
+          cvs-buildpackage,
+          debbindiff,
+          devscripts-el,
+          gnuplot,
+          gpgv,
+          libauthen-sasl-perl,
+          libfile-desktopentry-perl,
+          libnet-smtp-ssl-perl,
+          libterm-size-perl,
+          libtimedate-perl,
+          libyaml-syck-perl,
+          mutt,
+          ssh-client,
+          svn-buildpackage,
+          w3m,
+          ${vendor:Suggests}
+Breaks: ubuntu-dev-tools (<< 0.147~)
+Replaces: ubuntu-dev-tools (<< 0.124~)
+Description: scripts to make the life of a Debian Package maintainer easier
+ Contains the following scripts, dependencies/recommendations shown in
+ brackets afterwards:
+ .
+  - annotate-output: run a command and prepend time and stream (O for stdout,
+    E for stderr) for every line of output
+  - archpath: print tla/Bazaar package names [tla | bazaar]
+  - bts: a command-line tool for manipulating the BTS [www-browser,
+    libauthen-sasl-perl, libnet-smtp-ssl-perl, libsoap-lite-perl, liburi-perl,
+    libwww-perl, bsd-mailx | mailx]
+  - build-rdeps: search for all packages that build-depend on a given package
+    [dctrl-tools]
+  - chdist: tool to easily play with several distributions [dctrl-tools]
+  - checkbashisms: check whether a /bin/sh script contains any common
+    bash-specific contructs
+  - cowpoke: upload a Debian source package to a cowbuilder host and build it,
+    optionally also signing and uploading the result to an incoming queue
+    [ssh-client]
+  - cvs-debi, cvs-debc: wrappers around debi and debc respectively (see below)
+    which allow them to be called from the CVS working directory
+    [cvs-buildpackage]
+  - cvs-debrelease: wrapper around debrelease which allows it to be called
+    from the CVS working directory [cvs-buildpackage, dupload | dput,
+    ssh-client]
+  - cvs-debuild: wrapper for cvs-buildpackage to use debuild as its package
+    building program [cvs-buildpackage, fakeroot, lintian, gnupg]
+  - dcmd: run a given command replacing the name of a .changes or .dsc file
+    with each of the files referenced therein
+  - dcontrol: remotely query package and source control files for all Debian
+    distributions [liburl-perl, libwww-perl]
+  - dd-list: given a list of packages, pretty-print it ordered by maintainer
+  - debc: display the contents of just-built .debs
+  - debchange/dch: automagically add entries to debian/changelog files
+    [libdistro-info-perl, libsoap-lite-perl]
+  - debcheckout: checkout the development repository of a Debian package
+  - debclean: clean a Debian source tree [fakeroot]
+  - debcommit: commit changes to cvs, darcs, svn, svk, tla, bzr, git, or hg,
+    basing commit message on changelog [cvs | darcs | subversion | svk | tla |
+    bzr | git-core | mercurial, libtimedate-perl]
+  - debdiff: compare two versions of a Debian package to check for
+    added and removed files. Use the debbindiff package for deep comparisons.
+    [wdiff, patchutils]
+  - debi: install a just-built package
+  - debpkg: dpkg wrapper to be able to manage/test packages without su
+  - debrelease: wrapper around dupload or dput [dupload | dput, ssh-client]
+  - debsign, debrsign: sign a .changes/.dsc pair without needing any of
+    the rest of the package to be present; can sign the pair remotely
+    or fetch the pair from a remote machine for signing [gnupg,
+    debian-keyring, ssh-client]
+  - debsnap: grab packages from http://snapshot.debian.org [libwww-perl,
+    libjson-perl]
+  - debuild: wrapper to build a package without having to su or worry
+    about how to invoke dpkg to build using fakeroot.  Also deals
+    with common environment problems, umask etc. [fakeroot, lintian, gnupg]
+  - deb-reversion: increase a binary package version number and repacks the
+    package, useful for porters and the like
+  - dep3changelog: generate a changelog entry from a DEP3-style patch header
+  - desktop2menu: given a freedesktop.org desktop file, generate a skeleton
+    for a menu file [libfile-desktopentry-perl]
+  - dget: download Debian source and binary packages [wget | curl]
+  - diff2patches: extract patches from a .diff.gz file placing them under
+    debian/ or, if present, debian/patches [patchutils]
+  - dpkg-depcheck, dpkg-genbuilddeps: determine the packages used during
+    the build of a Debian package; useful for determining the Build-Depends
+    control field needed [build-essential, strace]
+  - dscextract: extract a single file from a Debian source package [patchutils]
+  - dscverify: verify the integrity of a Debian package from the
+    .changes or .dsc files [gnupg, debian-keyring, libdigest-md5-perl]
+  - edit-patch: add/edit a patch for a source package and commit the changes
+    [quilt | dpatch | cdbs]
+  - getbuildlog: download package build logs from Debian auto-builders [wget]
+  - grep-excuses: grep the update_excuses.html file for your packages
+    [libterm-size-perl, wget, w3m]
+  - licensecheck: attempt to determine the license of source files
+  - list-unreleased: search for unreleased packages
+  - manpage-alert: locate binaries without corresponding manpages [man-db]
+  - mass-bug: mass-file bug reports [bsd-mailx | mailx]
+  - mergechanges: merge .changes files from the same release but built
+    on different architectures
+  - mk-build-deps: given a package name and/or control file, generate a binary
+    package which may be installed to satisfy the build-dependencies of the
+    given package [equivs]
+  - mk-origtargz: rename upstream tarball, optionally changing the compression
+    and removing unwanted files [unzip, xz-utils, file]
+  - namecheck: check project names are not already taken
+  - nmudiff: mail a diff of the current package against the previous version
+    to the BTS to assist in tracking NMUs [patchutils, mutt]
+  - origtargz: fetch the orig tarball of a Debian package from various sources,
+    and unpack it
+  - plotchangelog: view a nice plot of the data in a changelog file
+    [libtimedate-perl, gnuplot]
+  - pts-subscribe: subscribe to the PTS for a limited period of time
+    [bsd-mailx | mailx, at]
+  - rc-alert: list installed packages which have release-critical bugs
+    [wget | curl]
+  - rmadison: remotely query the Debian archive database about packages
+    [liburi-perl, wget | curl]
+  - sadt: run DEP-8 tests [python3-debian]
+  - suspicious-source: output a list of files which are not common source
+    files [python3-magic]
+  - svnpath: print Subversion repository paths [subversion]
+  - tagpending: run from a Debian source tree and tag bugs that are to be
+    closed in the latest changelog as pending [libsoap-lite-perl]
+  - transition-check: check a list of source packages for involvement in
+    transitions for which uploads to unstable are currently blocked
+    [libwww-perl, libyaml-syck-perl]
+  - uscan: scan upstream sites for new releases of packages [gpgv, gnupg,
+    liblwp-protocol-https-perl, libwww-perl, unzip, xz-utils, file]
+  - uupdate: integrate upstream changes into a source package [patch]
+  - what-patch: determine what patch system, if any, a source package is using
+    [patchutils]
+  - whodepends: check which maintainers' packages depend on a package
+  - who-uploads: determine the most recent uploaders of a package to the Debian
+    archive [gnupg, debian-keyring, debian-maintainers, wget]
+  - wnpp-alert: list installed packages which are orphaned or up for adoption
+    [wget | curl]
+  - wnpp-check: check whether there is an open request for packaging or
+    intention to package bug for a package [wget | curl]
+  - who-permits-upload: Retrieve information about Debian Maintainer access
+    control lists [gnupg, libencode-locale-perl, libwww-perl, debian-keyring]
+  - wrap-and-sort: wrap long lines and sort items in packaging files
+    [python3-debian]
+ .
+ Also included are a set of example mail filters for filtering mail
+ from Debian mailing lists using exim, procmail, etc.
